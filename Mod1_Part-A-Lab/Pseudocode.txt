@@ -1,0 +1,44 @@
+START PROGRAM
+
+INITIALIZE text-to-speech engine
+SET engine properties (rate, volume, voice)
+
+DEFINE FUNCTION say(text):
+    USE TTS engine to speak text
+
+DEFINE FUNCTION get_date_time():
+    GET current date and time
+    FORMAT date as "Month Day, Year"
+    FORMAT day as "Day of Week"
+    FORMAT time as "Hour:Minute AM/PM"
+    RETURN (date, day, time)
+
+DEFINE FUNCTION get_info(info):
+    OPEN "data.txt" in write mode
+    IF info == "name":
+        ASK user for name input
+        WRITE name to file
+
+DEFINE FUNCTION update_info():
+    OPEN "data.txt" in read mode
+    READ all lines into list (strip whitespace)
+    RETURN list of stored data
+
+MAIN PROGRAM:
+    CALL update_info() → store in d
+    SET user_name = first element of d
+
+    IF user_name is "None":
+        CALL get_info("name")
+        CALL update_info() again → update d
+        SET user_name = first element of d
+
+    CALL get_date_time() → (date, day, time)
+
+    CREATE message:
+        "Hello {user_name}. The date is {date},
+        on a {day}, and the time is {time}"
+
+    CALL say(message)
+
+END PROGRAM

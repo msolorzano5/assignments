@@ -1,9 +1,17 @@
 # task: Display a personalized greeting based on the user’s name and the time of day.
 from datetime import datetime
+import pyttsx3
+
+### set up the TTS engine ###
+engine = pyttsx3.init()
+engine.setProperty('rate', 180)
+engine.setProperty('volume', 1.0)
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
 
 def say(text):
-    # replace with actual TTS logic
-    print(text)
+    engine.say(text)
+    engine.runAndWait()
 
 def get_date_time():
     dated = datetime.now().date()
@@ -16,7 +24,8 @@ def get_date_time():
 def get_info(info):
     with open("data.txt", 'w') as data_file:
         if info == "name":
-            name = input("What is your name? ")
+            say("Can you please tell me your name?")
+            name = input("")
             data_file.seek(0)
             data_file.write(name)
 
@@ -37,9 +46,5 @@ if __name__ == "__main__":
 
     ## start building the string to say
     date, day, time = get_date_time()
-    to_say = f"Hello {user_name}. The date is {date}, it is {day}, and the time is {time}"
+    to_say = f"Hello {user_name}. The date is {date}, on a {day}, and the time is {time}"
     say(to_say)
-
-
-
-
