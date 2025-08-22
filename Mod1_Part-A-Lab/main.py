@@ -9,7 +9,7 @@ engine.setProperty('volume', 1.0)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
-def say(text):
+def speak(text):
     engine.say(text)
     engine.runAndWait()
 
@@ -24,7 +24,7 @@ def get_date_time():
 def get_info(info):
     with open("data.txt", 'w') as data_file:
         if info == "name":
-            say("Can you please tell me your name?")
+            speak("Can you please tell me your name?")
             name = input("")
             data_file.seek(0)
             data_file.write(name)
@@ -47,4 +47,4 @@ if __name__ == "__main__":
     ## start building the string to say
     date, day, time = get_date_time()
     to_say = f"Hello {user_name}. The date is {date}, on a {day}, and the time is {time}"
-    say(to_say)
+    speak(to_say)
